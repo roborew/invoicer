@@ -1,51 +1,71 @@
-import Link from "next/link";
-import NavLinks from "@/app/ui/dashboard/nav-links";
-import AcmeLogo from "@/app/ui/quibill-logo";
-import { PowerIcon } from "@heroicons/react/24/outline";
-import { signOut } from "@/auth";
+import Pagination from "@/app/ui/invoices/pagination";
+import Search from "@/app/ui/search";
+import Table from "@/app/ui/invoices/table";
+import { CreateInvoice } from "@/app/ui/invoices/buttons";
+import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import { Suspense } from "react";
+import { Metadata } from "next";
+import { fetchInvoicesPages } from "@/app/lib/data";
 
-export default function SideNav() {
+type SearchParams = {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
+};
+
+export const metadata: Metadata = {
+  title: "Invoices",
+};
+
+export default async function Page(props: SearchParams) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = await fetchInvoicesPages(query);
+
   return (
-    <div className="flex min-h-0 flex-col px-4 py-5 md:h-full md:px-5 md:py-6">
-      <Link
-        className="mb-8 flex items-center rounded-xl focus-visible:outline-brand-600"
-        href="/"
-        aria-label="Quibill home"
-      >
-        <AcmeLogo />
-      </Link>
+    <main className="space-y-6">
+      <header className="flex flex-col gap-5 border-b border-sand-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="mb-2 text-sm font-medium text-brand-700">
+            Financial activity
+          </p>
 
-      <div className="flex min-h-0 flex-1 flex-col">
-        <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-sand-800/60">
-          Workspace
-        </p>
+          <h1 className="text-2xl font-bold tracking-tight text-sand-900 sm:text-3xl">
+            Invoices
+          </h1>
 
-        <nav
-          className="flex flex-row gap-2 md:flex-col"
-          aria-label="Main navigation"
-        >
-          <NavLinks />
-        </nav>
-
-        <div className="hidden flex-1 md:block" />
-
-        <div className="mt-6 border-t border-sand-200 pt-4">
-          <form
-            action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/" });
-            }}
-          >
-            <button
-              type="submit"
-              className="flex h-11 w-full items-center justify-center gap-3 rounded-xl px-3 text-sm font-medium text-sand-800 transition-colors hover:bg-sand-100 hover:text-sand-900 focus-visible:outline-brand-600 md:justify-start"
-            >
-              <PowerIcon className="h-5 w-5 shrink-0" />
-              <span>Sign out</span>
-            </button>
-          </form>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-sand-800/70">
+            Create, manage, and track invoices for your customers.
+          </p>
         </div>
+
+        <div className="shrink-0">
+          <CreateInvoice />
+        </div>
+      </header>
+
+      <section aria-label="Invoice list" className="space-y-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <Search placeholder="Search invoices..." />
+
+          <p className="text-sm text-sand-800/60">
+            {query ? `Results for “${query}”` : "All invoices"}
+          </p>
+        </div>
+
+        <Suspense
+          key={query + currentPage}
+          fallback={<InvoicesTableSkeleton />}
+        >
+          <Table query={query} currentPage={currentPage} />
+        </Suspense>
+      </section>
+
+      <div className="flex w-full justify-center pt-2">
+        <Pagination totalPages={totalPages} />
       </div>
-    </div>
+    </main>
   );
 }
