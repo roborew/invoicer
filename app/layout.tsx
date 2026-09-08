@@ -10,8 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://next-learn-dashboard.vercel.sh"),
 };
 
-import { inter } from "@/app/ui/fonts";
-import { roboto } from "@/app/ui/fonts";
+import { jakarta } from "@/app/ui/fonts";
 
 export default function RootLayout({
   children,
@@ -20,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={jakarta.className}>{children}</body>
     </html>
   );
 }
