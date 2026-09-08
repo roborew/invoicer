@@ -1,27 +1,28 @@
-import { CheckIcon, ClockIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
+import { CheckIcon, ClockIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
 export default function InvoiceStatus({ status }: { status: string }) {
   return (
     <span
       className={clsx(
-        'inline-flex items-center rounded-full px-2 py-1 text-xs',
+        "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold",
         {
-          'bg-gray-100 text-gray-500': status === 'pending',
-          'bg-green-500 text-white': status === 'paid',
+          "bg-sand-100 text-sand-800/70": status === "pending",
+          "bg-brand-50 text-brand-700": status === "paid",
         },
       )}
     >
-      {status === 'pending' ? (
+      {status === "pending" ? (
         <>
-          Pending
-          <ClockIcon className="ml-1 w-4 text-gray-500" />
+          <span>Pending</span>
+          <ClockIcon className="h-3.5 w-3.5" />
         </>
       ) : null}
-      {status === 'paid' ? (
+
+      {status === "paid" ? (
         <>
-          Paid
-          <CheckIcon className="ml-1 w-4 text-white" />
+          <span>Paid</span>
+          <CheckIcon className="h-3.5 w-3.5" />
         </>
       ) : null}
     </span>

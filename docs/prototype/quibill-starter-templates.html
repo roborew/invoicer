@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quibill — Calm, Simple Invoicing for Freelancers & Small Teams</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            },
+            sand: {
+              50: '#faf9f6',
+              100: '#f5f4ef',
+              200: '#ebe8df',
+              300: '#dcd7c9',
+              800: '#2d2b28',
+              900: '#1c1b19',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #faf9f6;
+    }
+  </style>
+</head>
+<body class="text-sand-900 antialiased min-h-screen flex flex-col justify-between selection:bg-brand-100 selection:text-brand-700">
+
+  <!-- Interactive View Switcher for Prototype Exploration -->
+  <header class="fixed top-3 left-1/2 -translate-x-1/2 z-50 bg-white/90 backdrop-blur border border-sand-200 shadow-sm rounded-full px-2 py-1 flex items-center gap-1">
+    <button onclick="switchView('landing')" id="tab-landing" class="px-3 py-1 text-xs font-semibold rounded-full bg-sand-900 text-white transition-all">Homepage</button>
+    <button onclick="switchView('login')" id="tab-login" class="px-3 py-1 text-xs font-medium rounded-full text-zinc-600 hover:text-black transition-all">Sign In</button>
+    <button onclick="switchView('dashboard')" id="tab-dashboard" class="px-3 py-1 text-xs font-medium rounded-full text-zinc-600 hover:text-black transition-all">App Workspace</button>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- 1. FRIENDLY LANDING PAGE                   -->
+  <!-- ========================================== -->
+  <main id="view-landing" class="block w-full">
+    <!-- Top Nav -->
+    <nav class="border-b border-sand-200/80 bg-sand-50/80 sticky top-0 backdrop-blur z-40">
+      <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold text-base shadow-sm">
+            Q
+          </div>
+          <span class="font-bold text-lg tracking-tight text-sand-900">Quibill</span>
+        </div>
+
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-sand-800">
+          <a href="#how" class="hover:text-brand-600 transition-colors">How it works</a>
+          <a href="#features" class="hover:text-brand-600 transition-colors">Features</a>
+          <a href="#pricing" class="hover:text-brand-600 transition-colors">Simple pricing</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="switchView('login')" class="text-xs sm:text-sm font-semibold text-sand-800 hover:text-black px-3 py-1.5 transition-colors">Sign in</button>
+          <button onclick="switchView('dashboard')" class="text-xs sm:text-sm font-semibold bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-xl transition-all shadow-sm">Get started free</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Warm Hero Section -->
+    <section class="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-100 text-brand-700 text-xs font-semibold mb-6">
+        <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+        Built for independent developers, designers & studios
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-sand-900 leading-tight mb-6">
+        Invoicing that leaves you free to do your actual work.
+      </h1>
+      <p class="text-base sm:text-lg text-sand-800 max-w-2xl mx-auto font-normal leading-relaxed mb-8">
+        No bloated accounting spreadsheets or confusing enterprise jargon. Create clean invoices in seconds, track client payments effortlessly, and get paid without awkward follow-ups.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button onclick="switchView('dashboard')" class="w-full sm:w-auto px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-xl transition-all shadow-sm flex items-center justify-center gap-2">
+          <span>Start invoicing for free</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+        <button onclick="switchView('login')" class="w-full sm:w-auto px-6 py-3 bg-white border border-sand-200 text-sand-800 font-semibold text-sm rounded-xl hover:bg-sand-100 transition-all">
+          View demo dashboard
+        </button>
+      </div>
+      <p class="text-xs text-zinc-500 mt-4 font-normal">No credit card required • Set up in under 2 minutes</p>
+    </section>
+
+    <!-- Value Propositions -->
+    <section class="max-w-5xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-2xl border border-sand-200/80 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-sand-100 flex items-center justify-center text-brand-600 mb-4">
+          <i data-lucide="send" class="w-5 h-5"></i>
+        </div>
+        <h3 class="font-bold text-sand-900 mb-2">Send in 60 seconds</h3>
+        <p class="text-xs sm:text-sm text-sand-800 leading-relaxed font-normal">
+          Pick a client, type line items, and hit send. We generate shareable web links and instant PDF invoices automatically.
+        </p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-sand-200/80 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-sand-100 flex items-center justify-center text-brand-600 mb-4">
+          <i data-lucide="bell-ring" class="w-5 h-5"></i>
+        </div>
+        <h3 class="font-bold text-sand-900 mb-2">Gentle automatic nudges</h3>
+        <p class="text-xs sm:text-sm text-sand-800 leading-relaxed font-normal">
+          Quibill takes the awkwardness out of late payments with automated, friendly reminder emails sent right on schedule.
+        </p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-sand-200/80 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-sand-100 flex items-center justify-center text-brand-600 mb-4">
+          <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+        </div>
+        <h3 class="font-bold text-sand-900 mb-2">Simple client directory</h3>
+        <p class="text-xs sm:text-sm text-sand-800 leading-relaxed font-normal">
+          Keep client emails, standard hourly rates, payment history, and currency preferences organized in one cozy place.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 2. WARM, SIMPLE AUTH / LOGIN               -->
+  <!-- ========================================== -->
+  <main id="view-login" class="hidden w-full min-h-[85vh] flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-sm bg-white p-8 rounded-2xl border border-sand-200 shadow-sm">
+      <div class="flex items-center gap-2 mb-6">
+        <div class="w-7 h-7 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold text-sm">
+          Q
+        </div>
+        <span class="font-bold text-base tracking-tight text-sand-900">Quibill</span>
+      </div>
+
+      <h2 class="text-xl font-bold text-sand-900 mb-1">Welcome back</h2>
+      <p class="text-xs text-sand-800 mb-6">Sign in to check on your balances and invoices.</p>
+
+      <form onsubmit="event.preventDefault(); switchView('dashboard');" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-sand-900 mb-1.5">Email address</label>
+          <input type="email" required placeholder="you@studio.com" class="w-full bg-sand-50 border border-sand-200 rounded-xl px-3 py-2 text-xs text-sand-900 placeholder:text-zinc-400 focus:outline-none focus:border-brand-600 focus:bg-white transition-all">
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-xs font-semibold text-sand-900">Password</label>
+            <a href="#" class="text-xs font-medium text-brand-600 hover:underline">Forgot?</a>
+          </div>
+          <input type="password" required placeholder="••••••••••••" class="w-full bg-sand-50 border border-sand-200 rounded-xl px-3 py-2 text-xs text-sand-900 placeholder:text-zinc-400 focus:outline-none focus:border-brand-600 focus:bg-white transition-all">
+        </div>
+
+        <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 mt-2">
+          <span>Log in to your workspace</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </form>
+
+      <div class="mt-6 pt-5 border-t border-sand-100 text-center">
+        <p class="text-xs text-zinc-500">
+          New to Quibill? <a href="#" onclick="switchView('landing')" class="text-brand-600 font-semibold hover:underline">Create an account</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 3. CALM & CLEAN DASHBOARD WORKSPACE        -->
+  <!-- ========================================== -->
+  <div id="view-dashboard" class="hidden w-full flex-1 flex bg-sand-50">
+
+    <!-- Minimal Sidebar -->
+    <aside class="w-60 border-r border-sand-200 bg-white flex flex-col justify-between p-4 shrink-0">
+      <div class="space-y-6">
+        <!-- Logo -->
+        <div class="flex items-center gap-2 px-2 pt-1">
+          <div class="w-7 h-7 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold text-sm">
+            Q
+          </div>
+          <div>
+            <span class="font-bold text-sm tracking-tight text-sand-900">Quibill</span>
+            <span class="block text-[10px] text-zinc-500 font-normal">Freelance Studio</span>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="space-y-1">
+          <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl bg-sand-100 text-sand-900 text-xs font-semibold">
+            <i data-lucide="home" class="w-4 h-4 text-brand-600"></i>
+            <span>Overview</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-zinc-600 hover:text-sand-900 hover:bg-sand-100 text-xs font-medium transition-colors">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            <span>Invoices</span>
+            <span class="ml-auto text-[10px] bg-sand-200/80 px-2 py-0.5 rounded-full font-semibold">12</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-zinc-600 hover:text-sand-900 hover:bg-sand-100 text-xs font-medium transition-colors">
+            <i data-lucide="users" class="w-4 h-4"></i>
+            <span>Clients</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-zinc-600 hover:text-sand-900 hover:bg-sand-100 text-xs font-medium transition-colors">
+            <i data-lucide="settings" class="w-4 h-4"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- User card -->
+      <div class="border-t border-sand-200 pt-3 flex items-center justify-between px-2">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-sand-200 text-sand-800 flex items-center justify-center font-bold text-[11px]">
+            RA
+          </div>
+          <div class="text-left">
+            <p class="text-xs font-semibold text-sand-900 leading-tight">Robin Andrew</p>
+            <p class="text-[10px] text-zinc-500">Solo plan</p>
+          </div>
+        </div>
+        <button onclick="switchView('landing')" title="Sign out" class="text-zinc-400 hover:text-sand-900 transition-colors p-1">
+          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col overflow-y-auto">
+      <!-- Top Bar -->
+      <header class="h-16 border-b border-sand-200 bg-white/70 px-8 flex items-center justify-between backdrop-blur sticky top-0 z-10">
+        <div>
+          <h2 class="text-sm font-bold text-sand-900">Good afternoon, Robin 👋</h2>
+          <p class="text-xs text-zinc-500">Here is what is happening with your clients this month.</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="openModal()" class="px-3.5 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>New Invoice</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="p-8 space-y-6 max-w-5xl">
+        <!-- Friendly Metrics Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white p-5 rounded-2xl border border-sand-200 shadow-sm">
+            <span class="text-xs font-medium text-zinc-500">Paid this month</span>
+            <div class="text-2xl font-bold text-sand-900 mt-1">£6,450.00</div>
+            <p class="text-[11px] text-brand-600 font-medium mt-1 flex items-center gap-1">
+              <i data-lucide="check-circle" class="w-3 h-3"></i> 4 invoices settled
+            </p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-sand-200 shadow-sm">
+            <span class="text-xs font-medium text-zinc-500">Awaiting payment</span>
+            <div class="text-2xl font-bold text-sand-900 mt-1">£2,100.00</div>
+            <p class="text-[11px] text-amber-600 font-medium mt-1 flex items-center gap-1">
+              <i data-lucide="clock" class="w-3 h-3"></i> 2 invoices due soon
+            </p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-sand-200 shadow-sm">
+            <span class="text-xs font-medium text-zinc-500">Overdue</span>
+            <div class="text-2xl font-bold text-sand-900 mt-1">£450.00</div>
+            <p class="text-[11px] text-zinc-500 font-medium mt-1 flex items-center gap-1">
+              1 gentle nudge ready to send
+            </p>
+          </div>
+        </div>
+
+        <!-- Invoices List Card -->
+        <div class="bg-white rounded-2xl border border-sand-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-sand-200 flex items-center justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-sand-900">Recent Invoices</h3>
+              <p class="text-xs text-zinc-500">Track and manage your client billing.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="text" placeholder="Filter invoices..." class="bg-sand-50 border border-sand-200 rounded-lg px-3 py-1.5 text-xs text-sand-900 placeholder:text-zinc-400 focus:outline-none focus:border-brand-600">
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-sand-50/70 border-b border-sand-200 text-zinc-500 uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="py-3 px-5 font-semibold">Client</th>
+                  <th class="py-3 px-5 font-semibold">Invoice</th>
+                  <th class="py-3 px-5 font-semibold">Date</th>
+                  <th class="py-3 px-5 font-semibold">Amount</th>
+                  <th class="py-3 font-semibold">Status</th>
+                  <th class="py-3 px-5 font-semibold text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-sand-100 text-sand-900">
+                <tr class="hover:bg-sand-50/50 transition-colors">
+                  <td class="py-3.5 px-5 font-semibold text-sand-900">
+                    Bloom Studio
+                    <span class="block text-[10px] text-zinc-400 font-normal">sarah@bloomstudio.design</span>
+                  </td>
+                  <td class="py-3.5 px-5 font-mono text-zinc-500">#QB-104</td>
+                  <td class="py-3.5 px-5 text-zinc-600">Today</td>
+                  <td class="py-3.5 px-5 font-bold">£2,400.00</td>
+                  <td class="py-3.5">
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-brand-50 text-brand-700 border border-brand-200">
+                      <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Paid
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-5 text-right space-x-2">
+                    <button class="text-zinc-400 hover:text-brand-600 text-xs font-semibold transition-colors">View</button>
+                    <button class="text-zinc-400 hover:text-sand-900 text-xs font-semibold transition-colors">PDF</button>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-sand-50/50 transition-colors">
+                  <td class="py-3.5 px-5 font-semibold text-sand-900">
+                    Campfire Collective
+                    <span class="block text-[10px] text-zinc-400 font-normal">hello@campfire.co</span>
+                  </td>
+                  <td class="py-3.5 px-5 font-mono text-zinc-500">#QB-103</td>
+                  <td class="py-3.5 px-5 text-zinc-600">3 days ago</td>
+                  <td class="py-3.5 px-5 font-bold">£1,650.00</td>
+                  <td class="py-3.5">
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                      <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Due in 4 days
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-5 text-right space-x-2">
+                    <button class="text-zinc-400 hover:text-brand-600 text-xs font-semibold transition-colors">Send Nudge</button>
+                    <button class="text-zinc-400 hover:text-sand-900 text-xs font-semibold transition-colors">PDF</button>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-sand-50/50 transition-colors">
+                  <td class="py-3.5 px-5 font-semibold text-sand-900">
+                    Oat & Mill Agency
+                    <span class="block text-[10px] text-zinc-400 font-normal">finance@oatmill.uk</span>
+                  </td>
+                  <td class="py-3.5 px-5 font-mono text-zinc-500">#QB-102</td>
+                  <td class="py-3.5 px-5 text-zinc-600">Aug 24, 2026</td>
+                  <td class="py-3.5 px-5 font-bold">£450.00</td>
+                  <td class="py-3.5">
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+                      <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2 days overdue
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-5 text-right space-x-2">
+                    <button class="text-rose-600 hover:underline text-xs font-semibold transition-colors">Remind</button>
+                    <button class="text-zinc-400 hover:text-sand-900 text-xs font-semibold transition-colors">PDF</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-4 border-t border-sand-100 flex items-center justify-between text-xs text-zinc-500">
+            <span>Showing 3 invoices</span>
+            <button class="font-semibold text-brand-600 hover:underline">View all past invoices &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 4. FRIENDLY CREATE INVOICE MODAL           -->
+  <!-- ========================================== -->
+  <div id="modal-create" class="fixed inset-0 z-50 bg-sand-900/40 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white border border-sand-200 rounded-2xl w-full max-w-md p-6 shadow-xl relative">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-base font-bold text-sand-900">New Client Invoice</h3>
+          <p class="text-xs text-zinc-500">Fill in the details to issue your invoice.</p>
+        </div>
+        <button onclick="closeModal()" class="text-zinc-400 hover:text-sand-900 transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form onsubmit="event.preventDefault(); closeModal();" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-sand-900 mb-1">Who is this for?</label>
+          <select required class="w-full bg-sand-50 border border-sand-200 rounded-xl px-3 py-2 text-xs text-sand-900 focus:outline-none focus:border-brand-600">
+            <option value="">Select an existing client...</option>
+            <option>Bloom Studio (sarah@bloomstudio.design)</option>
+            <option>Campfire Collective (hello@campfire.co)</option>
+            <option>Oat & Mill Agency (finance@oatmill.uk)</option>
+            <option>+ Add new client</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-sand-900 mb-1">Invoice amount (£)</label>
+          <input type="number" step="0.01" required placeholder="1250.00" class="w-full bg-sand-50 border border-sand-200 rounded-xl px-3 py-2 text-xs text-sand-900 placeholder:text-zinc-400 focus:outline-none focus:border-brand-600">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-sand-900 mb-1">Payment terms</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2 p-2.5 border border-sand-200 rounded-xl cursor-pointer hover:bg-sand-50">
+              <input type="radio" name="terms" value="14" checked class="text-brand-600 focus:ring-0">
+              <span class="text-xs text-sand-900 font-medium">Net 14 days</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 border border-sand-200 rounded-xl cursor-pointer hover:bg-sand-50">
+              <input type="radio" name="terms" value="30" class="text-brand-600 focus:ring-0">
+              <span class="text-xs text-sand-900 font-medium">Net 30 days</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-2 border-t border-sand-100">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl border border-sand-200 text-xs font-semibold text-sand-800 hover:bg-sand-100">Cancel</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-brand-600 text-xs font-semibold text-white hover:bg-brand-700 shadow-sm">Create & Send Invoice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-4 text-center text-xs text-zinc-400 border-t border-sand-200/60 bg-white">
+    Quibill &bull; Simple, friendly invoicing for independent creators and small teams.
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    function switchView(viewName) {
+      document.getElementById('view-landing').classList.add('hidden');
+      document.getElementById('view-login').classList.add('hidden');
+      document.getElementById('view-dashboard').classList.add('hidden');
+
+      const tabs = ['landing', 'login', 'dashboard'];
+      tabs.forEach(tab => {
+        const btn = document.getElementById('tab-' + tab);
+        btn.classList.remove('bg-sand-900', 'text-white');
+        btn.classList.add('text-zinc-600');
+      });
+
+      document.getElementById('view-' + viewName).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + viewName);
+      activeBtn.classList.remove('text-zinc-600');
+      activeBtn.classList.add('bg-sand-900', 'text-white');
+    }
+
+    function openModal() {
+      const modal = document.getElementById('modal-create');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal-create');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>

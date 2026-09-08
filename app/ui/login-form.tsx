@@ -1,6 +1,5 @@
 "use client";
 
-import { lusitana } from "@/app/ui/fonts";
 import {
   AtSymbolIcon,
   KeyIcon,
@@ -21,41 +20,56 @@ export default function LoginForm() {
   );
 
   return (
-    <form action={formAction} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Please log in to continue.
-        </h1>
-        <div className="w-full">
+    <form action={formAction}>
+      <div className="rounded-2xl border border-sand-200 bg-white p-6 shadow-sm sm:p-8">
+        <div className="mb-8">
+          <p className="mb-2 text-sm font-medium text-brand-700">
+            Welcome back
+          </p>
+
+          <h1 className="text-2xl font-bold tracking-tight text-sand-900">
+            Sign in to Quibill
+          </h1>
+
+          <p className="mt-2 text-sm leading-6 text-sand-800/70">
+            Enter your details to continue to your dashboard.
+          </p>
+        </div>
+
+        <div className="space-y-5">
           <div>
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-2 block text-sm font-semibold text-sand-900"
               htmlFor="email"
             >
               Email
             </label>
+
             <div className="relative">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block h-11 w-full rounded-xl border border-sand-200 bg-white py-2.5 pl-10 pr-4 text-sm text-sand-900 placeholder:text-sand-800/50 focus:border-brand-600 focus:ring-brand-600"
                 id="email"
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
                 required
               />
-              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+
+              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-sand-800/50 peer-focus:text-brand-700" />
             </div>
           </div>
-          <div className="mt-4">
+
+          <div>
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-2 block text-sm font-semibold text-sand-900"
               htmlFor="password"
             >
               Password
             </label>
+
             <div className="relative">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block h-11 w-full rounded-xl border border-sand-200 bg-white py-2.5 pl-10 pr-4 text-sm text-sand-900 placeholder:text-sand-800/50 focus:border-brand-600 focus:ring-brand-600"
                 id="password"
                 type="password"
                 name="password"
@@ -63,20 +77,25 @@ export default function LoginForm() {
                 required
                 minLength={6}
               />
-              <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+
+              <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-sand-800/50 peer-focus:text-brand-700" />
             </div>
           </div>
         </div>
+
         <input type="hidden" name="redirectTo" value={callbackUrl} />
-        <Button className="mt-4 w-full" aria-disabled={isPending}>
-          Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+
+        <Button className="mt-6 w-full" aria-disabled={isPending}>
+          <span>Sign in</span>
+          <ArrowRightIcon className="ml-auto h-5 w-5" />
         </Button>
-        <div className="flex h-8 items-end space-x-1">
+
+        <div className="min-h-8 pt-4" aria-live="polite" aria-atomic="true">
           {errorMessage && (
-            <>
-              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
-            </>
+            <div className="flex items-start gap-2 text-sm text-red-600">
+              <ExclamationCircleIcon className="h-5 w-5 shrink-0" />
+              <p>{errorMessage}</p>
+            </div>
           )}
         </div>
       </div>
