@@ -1,38 +1,51 @@
-import Form from "@/app/ui/invoices/edit-form";
-import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
-import { fetchInvoiceById, fetchCustomers } from "@/app/lib/data";
-import { Metadata } from "next";
+import Link from "next/link";
+import NavLinks from "@/app/ui/dashboard/nav-links";
+import AcmeLogo from "@/app/ui/quibill-logo";
+import { PowerIcon } from "@heroicons/react/24/outline";
+import { signOut } from "@/auth";
 
-export const metadata: Metadata = {
-  title: "Edit Invoice",
-};
-import { notFound } from "next/navigation";
-
-export default async function Page(props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const id = params.id;
-
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
-  ]);
-
-  if (!invoice) {
-    notFound();
-  }
+export default function SideNav() {
   return (
-    <main>
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: "Invoices", href: "/dashboard/invoices" },
-          {
-            label: "Edit Invoice",
-            href: `/dashboard/invoices/${id}/edit`,
-            active: true,
-          },
-        ]}
-      />
-      <Form invoice={invoice} customers={customers} />
-    </main>
+    <div className="flex min-h-0 flex-col px-4 py-5 md:h-full md:px-5 md:py-6">
+      <Link
+        className="mb-8 flex items-center rounded-xl focus-visible:outline-brand-600"
+        href="/"
+        aria-label="Quibill home"
+      >
+        <AcmeLogo />
+      </Link>
+
+      <div className="flex min-h-0 flex-1 flex-col">
+        <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-sand-800/60">
+          Workspace
+        </p>
+
+        <nav
+          className="flex flex-row gap-2 md:flex-col"
+          aria-label="Main navigation"
+        >
+          <NavLinks />
+        </nav>
+
+        <div className="hidden flex-1 md:block" />
+
+        <div className="mt-6 border-t border-sand-200 pt-4">
+          <form
+            action={async () => {
+              "use server";
+              await signOut({ redirectTo: "/" });
+            }}
+          >
+            <button
+              type="submit"
+              className="flex h-11 w-full items-center justify-center gap-3 rounded-xl px-3 text-sm font-medium text-sand-800 transition-colors hover:bg-sand-100 hover:text-sand-900 focus-visible:outline-brand-600 md:justify-start"
+            >
+              <PowerIcon className="h-5 w-5 shrink-0" />
+              <span>Sign out</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
