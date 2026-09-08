@@ -1,6 +1,5 @@
-import { clsx } from 'clsx';
-import Link from 'next/link';
-import { lusitana } from '@/app/ui/fonts';
+import clsx from "clsx";
+import Link from "next/link";
 
 interface Breadcrumb {
   label: string;
@@ -14,19 +13,30 @@ export default function Breadcrumbs({
   breadcrumbs: Breadcrumb[];
 }) {
   return (
-    <nav aria-label="Breadcrumb" className="mb-6 block">
-      <ol className={clsx(lusitana.className, 'flex text-xl md:text-2xl')}>
+    <nav aria-label="Breadcrumb" className="mb-6">
+      <ol className="flex flex-wrap items-center gap-2 text-sm">
         {breadcrumbs.map((breadcrumb, index) => (
           <li
             key={breadcrumb.href}
-            aria-current={breadcrumb.active}
-            className={clsx(
-              breadcrumb.active ? 'text-gray-900' : 'text-gray-500',
-            )}
+            aria-current={breadcrumb.active ? "page" : undefined}
+            className="flex items-center gap-2"
           >
-            <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+            <Link
+              href={breadcrumb.href}
+              className={clsx(
+                "transition-colors",
+                breadcrumb.active
+                  ? "font-medium text-sand-900"
+                  : "text-sand-800/60 hover:text-brand-700",
+              )}
+            >
+              {breadcrumb.label}
+            </Link>
+
             {index < breadcrumbs.length - 1 ? (
-              <span className="mx-3 inline-block">/</span>
+              <span aria-hidden="true" className="text-sand-800/40">
+                /
+              </span>
             ) : null}
           </li>
         ))}
