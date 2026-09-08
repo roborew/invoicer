@@ -20,7 +20,8 @@ export function UpdateInvoice({ id }: { id: string }) {
       href={`/dashboard/invoices/${id}/edit`}
       className="rounded-lg border border-sand-200 p-2 text-sand-800/70 transition-colors hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-brand-600"
     >
-      <PencilIcon className="w-5" />
+      <span className="sr-only">Edit invoice</span>
+      <PencilIcon className="h-5 w-5" />
     </Link>
   );
 }
