@@ -3,7 +3,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbopack",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -27,7 +28,18 @@
     "@types/node": "22.10.7",
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
-    "eslint": "^10.10.0",
+    "eslint": "^9.17.0",
     "eslint-config-next": "^16.3.4"
+  },
+  "pnpm": {
+    "allowedDeprecatedVersions": {
+      "eslint": "9.39.5",
+      "are-we-there-yet": "2.0.0",
+      "gauge": "3.0.2",
+      "glob": "7.2.3",
+      "inflight": "1.0.6",
+      "npmlog": "5.0.1",
+      "rimraf": "3.0.2"
+    }
   }
 }
