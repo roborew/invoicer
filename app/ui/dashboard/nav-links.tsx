@@ -30,7 +30,6 @@ export default function NavLinks() {
     <>
       {links.map((link) => {
         const LinkIcon = link.icon;
-
         const isActive =
           pathname === link.href ||
           (link.href !== "/dashboard" && pathname.startsWith(`${link.href}/`));

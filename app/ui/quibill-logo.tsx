@@ -1,7 +1,7 @@
 import { GlobeAltIcon } from "@heroicons/react/24/outline";
 import { jakarta } from "@/app/ui/fonts";
 
-export default function AcmeLogo() {
+export default function QuibillLogo() {
   return (
     <div className={`${jakarta.className} flex items-center gap-2`}>
       <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white shadow-sm">

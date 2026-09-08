@@ -1,34 +1,50 @@
 import Link from "next/link";
 import NavLinks from "@/app/ui/dashboard/nav-links";
-import AcmeLogo from "@/app/ui/quibill-logo";
+import QuibillLogo from "@/app/ui/quibill-logo";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import { signOut } from "@/auth";
 
 export default function SideNav() {
   return (
-    <div className="flex h-full flex-col px-3 py-4 md:px-2">
+    <div className="flex min-h-0 flex-col px-4 py-5 md:h-full md:px-5 md:py-6">
       <Link
-        className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
+        className="mb-8 flex items-center rounded-xl focus-visible:outline-brand-600"
         href="/"
+        aria-label="Quibill home"
       >
-        <div className="w-32 text-white md:w-40">
-          <AcmeLogo />
-        </div>
+        <QuibillLogo />
       </Link>
-      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <NavLinks />
-        <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
-        <form
-          action={async () => {
-            "use server";
-            await signOut({ redirectTo: "/" });
-          }}
+
+      <div className="flex min-h-0 flex-1 flex-col">
+        <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-sand-800/60">
+          Workspace
+        </p>
+
+        <nav
+          className="flex flex-row gap-2 md:flex-col"
+          aria-label="Main navigation"
         >
-          <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-            <PowerIcon className="w-6" />
-            <div className="hidden md:block">Sign Out</div>
-          </button>
-        </form>
+          <NavLinks />
+        </nav>
+
+        <div className="hidden flex-1 md:block" />
+
+        <div className="mt-6 border-t border-sand-200 pt-4">
+          <form
+            action={async () => {
+              "use server";
+              await signOut({ redirectTo: "/" });
+            }}
+          >
+            <button
+              type="submit"
+              className="flex h-11 w-full items-center justify-center gap-3 rounded-xl px-3 text-sm font-medium text-sand-800 transition-colors hover:bg-sand-100 hover:text-sand-900 focus-visible:outline-brand-600 md:justify-start"
+            >
+              <PowerIcon className="h-5 w-5 shrink-0" />
+              <span>Sign out</span>
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
