@@ -29,12 +29,14 @@ export default async function Page(props: searchParams) {
       </div>
 
       <div className="mt-6">
-        <Suspense
-          key={query + currentPage}
-          fallback={<InvoicesTableSkeleton />}
-        >
-          <Table query={query} currentPage={currentPage} />
-        </Suspense>
+        <div className="mt-6">
+          <Suspense
+            key={query + currentPage}
+            fallback={<InvoicesTableSkeleton />}
+          >
+            <Table query={query} currentPage={currentPage} />
+          </Suspense>
+        </div>
       </div>
     </section>
   );
